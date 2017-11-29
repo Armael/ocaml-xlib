@@ -1,0 +1,14 @@
+opam-version: "1.2"
+maintainer: "toto@toto.com"
+authors: [ "Toto" ]
+homepage: "https://github.com/fccm/ocaml-xlib"
+dev-repo: "https://github.com/fccm/ocaml-xlib.git"
+build: [
+  [make]
+]
+install: [
+  [make "install" "PREFIX=%{prefix}%"]
+]
+uninstall: [
+  [make "uninstall" "PREFIX=%{prefix}%"]
+]

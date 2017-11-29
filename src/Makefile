@@ -21,6 +21,7 @@
 # from, out of or in connection with the Software or the use or other dealings
 # in the Software.
 
+PACKAGE := xlib
 PREFIX := "$(shell ocamlc -where)/Xlib"
 SHARE_DOC_DIR := /usr/local/share/doc
 
@@ -287,18 +288,11 @@ install_x: cma opt \
    $(XLIB_INSTALL_FILES) \
    $(KEYSYM_INSTALL_FILES)
 
-	if [ ! -d $(PREFIX) ]; then install -d $(PREFIX) ; fi
-
-	install -m 0755  \
-	    $(XLIB_INSTALL_SOLIB) \
-	    $(PREFIX)/
-
-	install -m 0644  \
-	    $(XLIB_INSTALL_FILES) \
-	    $(KEYSYM_INSTALL_FILES) \
-	    $(PREFIX)/
-
-	install -m 0644 META $(PREFIX)/
+	ocamlfind install $(PACKAGE) \
+		$(XLIB_INSTALL_SOLIB) \
+		$(XLIB_INSTALL_FILES) \
+		$(KEYSYM_INSTALL_FILES) \
+		META
 
 # Install GLX
 install_glx: glx \
@@ -346,8 +340,7 @@ install_xt: xt \
 	    $(PREFIX)/
 
 uninstall:
-	rm $(PREFIX)/*
-	rmdir $(PREFIX)/
+	ocamlfind remove $(PACKAGE) || true
 
 # Dist
 VERSION := $(shell date +"%Y%m%d")
